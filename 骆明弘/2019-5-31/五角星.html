@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>canvas</title>
+		<style type="text/css">
+			body{background: #ccc;}
+			/*画板的宽高需要在html中设置*/
+			#oc{width: 1200px; height: 1200px; background: #ffffff;}
+		</style>
+	</head>
+	<body>
+		<!--画板，ie8及以下版本都不支持-->
+		<canvas id="oc" width="1500" height="1500">浏览器不支持该标记</canvas>
+		<script type="text/javascript">
+			window.onload = function(){
+				//1.获取画板
+				var oC = document.getElementById('oc');
+				//2.设置画板的2D效果
+				var oGC = oC.getContext('2d');
+
+
+				//作业:画个五角星
+				
+				oGC.fillStyle = 'yellow';
+				oGC.beginPath();
+				oGC.moveTo(95,310);
+				oGC.lineTo(400,310);
+				oGC.lineTo(490,20);
+				oGC.lineTo(580,310);
+				oGC.lineTo(890,310);
+				oGC.lineTo(650,490);
+				oGC.lineTo(740,780);
+				oGC.lineTo(490,600);
+				oGC.lineTo(250,780);
+				oGC.lineTo(340,490);
+
+				oGC.fill();//填充
+				oGC.closePath();
+			}
+		</script>
+	</body>
+</html>

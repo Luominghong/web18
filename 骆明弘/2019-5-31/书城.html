@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>购书，就上web17</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			ul,li {
+				list-style: none;
+			}
+			.clearfix:after {
+				content: '';
+				height: 0;
+				clear: both;
+				display: block;
+				overflow: hidden;
+			}
+			#book-wrap {
+				display: flex;
+				flex-direction: row;
+				width: 1200px;
+				border: 1px solid;
+				margin: 20px auto;
+			}
+			#book-wrap > .book {
+				width: 200px;
+				height: 330px;
+				border: 1px solid;
+				margin-left: 60px;
+				cursor: pointer;
+				
+			}
+			#book-wrap > .book > .book-info {
+				border: 1px solid;
+				height: 300px;
+			}
+			#book-wrap > .book > .book-info .img {
+				width: 100%;
+				height: 80%;
+				overflow: hidden;
+			}
+			.img img {
+				width: 100%;
+				height: 100%;			
+			}
+			
+			#gouwuche {
+				width: 1200px;
+				min-height: 350px;
+				margin: 20px auto;
+				border: 1px solid;
+				position: relative;
+			}
+			#carList {
+				width: 100%;
+				height: 200px;
+			}
+			span {
+				display: inline-block;
+				padding: 10px 20px;
+				width: 20%;
+			}
+			.sumPrice {
+				position: absolute;
+				right: 2px;
+				bottom: 2px;
+			}
+			li {
+				float: left;
+				padding: 10px 20px;
+				width: 20%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="book-wrap">
+			<div class="book" draggable = "true">
+				<div class="book-info">
+					<div  class="img">
+						<img src="img/img1.jpg"/>
+					</div>
+					<div class="bookName">JavaScript语言精粹</div>
+				</div>			
+				<div class="book-price">￥ 20</div>
+			</div>
+			<div class="book" draggable = "true">
+				<div class="book-info">
+					<div class="img">
+						<img src="img/img2.jpg"/>
+					</div>
+					<div class="bookName">JavaScript权威指南</div>
+				</div>			
+				<div class="book-price">￥ 25 </div>
+			</div>
+			<div class="book" draggable = "true">
+				<div class="book-info">
+					<div class="img">
+						<img src="img/img3.jpg"/>
+					</div>
+					<div class="bookName">精通JavaScript</div>
+				</div>			
+				<div class="book-price">￥ 30 </div>
+			</div>
+			<div class="book" draggable = "true">
+				<div class="book-info">
+					<div class="img">
+						<img src="img/img4.jpg"/>
+					</div>
+					<div class="bookName">JavaScript DOM编程艺术</div>
+				</div>			
+				<div class="book-price">￥ 35 </div>
+			</div>
+		</div>
+		
+		<div id="gouwuche">
+			<ul class="clearfix">
+				<li>书名</li>
+				<li>单价</li>
+				<li>数量</li>
+				<li>价格</li>
+			</ul>
+			<div id="carList">
+				
+			</div>
+		</div>
+		
+		<script>
+			window.onload = function () {
+				var bookList = document.getElementsByClassName('book');
+				var car = document.getElementById('carList');
+				var gouwuche = document.getElementById('gouwuche');
+				
+				var count = [0, 0, 0, 0];
+				var sumNode = null;
+			
+				for (var i = 0; i < bookList.length; i++) {
+					bookList[i].ondragstart = function (ev) {
+						//为了解决火狐的兼容性问题ev.dataTransfer
+						var ev = ev|| window.event;
+						ev.dataTransfer.setData('img',this.getElementsByClassName('img')[0]);
+						ev.dataTransfer.setData('name',this.getElementsByClassName('bookName')[0].innerHTML);
+						ev.dataTransfer.setData('price',parseInt(this.getElementsByClassName('book-price')[0].innerHTML.match(/[0-9]+/)));
+						
+//						console.log(this.getElementsByClassName('book-price')[0].innerHTML.match(/[0-9]+/));
+					}
+				}
+				car.ondragover = function (ev) {
+					ev = ev || window.event;
+					ev.preventDefault();
+				}
+				
+				car.ondrop = function (ev) {
+					ev = ev || window.event;
+					
+					var x =0;
+					var name = ev.dataTransfer.getData('name');
+					var price = ev.dataTransfer.getData('price');
+					
+					switch (name) {
+						case 'JavaScript语言精粹':
+							count[0]++;
+							x = 0;
+							break;
+						case 'JavaScript权威指南':
+							count[1]++;
+							x = 1;
+							break;
+						case '精通JavaScript':
+							count[2]++;
+							x = 2;
+							break;
+						case 'JavaScript DOM编程艺术':
+							count[3]++;
+							x = 3;
+							break;
+						default:
+							alert('error!');
+					}
+					
+					if (count[x] == 1) {
+						car.innerHTML += "<div class='buyList"+x+"'><span>"+name+"</span><span>"+price+"</span><span>"+count[x]+"</span><span class='price'>"+price*count[x]+"</span></div>";
+					} else {
+						var buyPrice = document.getElementsByClassName('buyList'+x)[0].getElementsByTagName('span')[3];
+						var buyCount = document.getElementsByClassName('buyList'+x)[0].getElementsByTagName('span')[2];
+						buyPrice.innerHTML = count[x]*price;
+						buyCount.innerHTML = count[x];
+					}
+					
+					//计算总价
+					var buySum = document.getElementsByClassName('price');		
+					var sum = 0;
+					for (var m = 0; m < buySum.length; m++) {
+						console.log(m+'-->'+buySum[m].innerHTML)
+						sum += parseInt(buySum[m].innerHTML);
+					}
+					console.log('sum-->'+sum);
+					
+					if (!sumNode) {
+						sumNode = document.createElement('div');
+						sumNode.className = 'sumPrice';
+						sumNode.innerHTML = '总计为:&nbsp;'+sum;
+						gouwuche.appendChild(sumNode);
+					} else {
+						sumNode = document.getElementsByClassName('sumPrice')[0];
+						sumNode.innerHTML = '总计为:&nbsp;'+sum;
+					}
+					
+				}
+
+			}
+		</script>
+	</body>
+</html>

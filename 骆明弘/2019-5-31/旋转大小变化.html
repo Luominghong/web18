@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>canvas</title>
+		<style type="text/css">
+			body{background: #ccc;}
+			/*画板的宽高需要在html中设置*/
+			#oc{width: 18.75rem; height: 15.625rem; background: #fff;}
+		</style>
+	</head>
+	<body>
+		<!--画板，ie8及以下版本都不支持-->
+		<canvas id="oc" width="600" height="500">浏览器不支持该标记</canvas>
+		<script type="text/javascript">
+			window.onload = function(){
+				//1.获取画板
+				var oC = document.getElementById('oc');
+				//2.设置画板的2D效果
+				var oGC = oC.getContext('2d');
+
+
+
+				var num = 0;
+				var timer = setInterval(function(){
+					num++;
+					oGC.save();
+					
+					//清画布
+					oGC.clearRect(0,0,oC.width,oC.height);
+
+					//位移
+					oGC.translate(200,200);
+
+					//旋转
+					oGC.rotate(num*Math.PI/180);
+					oGC.scale(num/180,num/180);
+					oGC.translate(-50,-50);
+					console.log(num);
+
+					//画方块
+					oGC.fillRect(0,0,100,100);
+					
+					//恢复初始值
+					oGC.restore();
+					if (num==360){
+						num=-360;
+					}
+				},10);
+				
+				
+				
+			}
+		</script>
+	</body>
+</html>

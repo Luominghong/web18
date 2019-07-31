@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            width: 100%;
+            height: 300px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .div1 div:first-child img{
+            width: 157px;
+            border:1px solid black;
+        }
+        .div1{
+            width: 160px;
+            height: 260px;
+            border: 1px solid black;
+        }
+        .idiv1,.idiv2,.idiv3,.idiv4{
+            display: inline-block;
+            width:130px;
+        }
+        table{
+            margin: 10px auto;
+            width: 600px;
+            height: 50px;
+            border: 1px dotted red;
+            background: lightblue;
+        }
+        footer{
+            width: 150px;
+            height: 60px;
+            background: lightgoldenrodyellow;
+            line-height: 60px;
+        }
+        .foot{
+            margin: 10px auto;
+            width: 600px;
+            height: 300px;
+            border: 1px dotted red;
+            background: lightblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+    <div class="div1">
+        <div><img src="img/img1.jpg" alt=""></div>
+        <div>js语言精粹</div>
+        ￥<div class="idiv1">20</div>
+    </div>
+    <div class="div1">
+        <div><img src="img/img2.jpg" alt=""></div>
+        <div>js权威指南</div>
+        ￥<div class="idiv2">35</div>
+    </div>
+    <div class="div1">
+        <div><img src="img/img3.jpg" alt=""></div>
+        <div>精通js</div>
+        ￥<div class="idiv3">25</div>
+    </div>
+    <div class="div1">
+        <div><img src="img/img4.jpg" alt=""></div>
+        <div>js编程艺术</div>
+        ￥<div class="idiv4">40</div>
+    </div>
+</div>
+<div class="foot">
+<table border="1" cellspacing="0" cellpadding="0"></table>
+<footer>总价：<span>0</span></footer>
+</div>
+<script>
+    var odiv = document.getElementsByClassName("div1")
+    var otable = document.getElementsByClassName("foot")[0]
+    var otab = document.getElementsByTagName("table")[0];
+    var ospan = document.getElementsByTagName("span")[0];
+    var a ;
+    var b ;
+    for(var i = 0 ; i < odiv.length ; i++){
+    odiv[i].ondragstart = function(){
+         a = this.children[1].innerHTML;
+         b = this.children[2].innerHTML;
+    }
+}
+    otable.ondragover = function(ev){
+         var ev = ev || window.event;
+         ev.preventDefault();
+         
+    }
+    otable.ondrop = function(){
+            var value = ospan.innerHTML;
+            if(b == 35){
+                ospan.innerHTML = (parseInt(value)+35);
+            }
+            if(b == 20){
+                ospan.innerHTML = (parseInt(value)+20);
+            }
+            if(b == 25){
+                ospan.innerHTML = (parseInt(value)+25);
+            }
+            if(b == 40){
+                ospan.innerHTML = (parseInt(value)+40);
+            }
+        var i = 1;
+        var otr1 = document.getElementsByTagName("tr");
+        for(var j =0;j<otr1.length;j++){
+            var str = otr1[j].children[1].innerHTML;
+            var sum = otr1[j].children[2].innerHTML;
+            if(a == str){
+                var num1 = parseInt(otr1[j].children[0].innerHTML)
+                var num2 = parseInt(otr1[j].children[2].innerHTML)
+                otr1[j].children[0].innerHTML = (num1+=1);
+                if(a == "js权威指南"){
+               otr1[j].children[2].innerHTML = (num2+=35);
+            }
+                if(a == "js语言精粹"){
+               otr1[j].children[2].innerHTML = (num2+=20);
+            }
+                if(a == "精通js"){
+               otr1[j].children[2].innerHTML = (num2+=25);
+            }
+                if(a == "js编程艺术"){
+               otr1[j].children[2].innerHTML = (num2+=40);
+            }
+                return;
+            }
+    }
+        var otr = `<tr style="height:50px;"><td>${i}</td><td>${a}</td><td>${parseInt(b)}</td></tr>`
+        
+        otab.innerHTML += otr;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <style>
+        /*清除浏览器默认*/
+        html body div ul li img{
+            margin: 0;
+            padding: 0;
+        }
+        /*设置背景*/
+        #box{
+            width: 80%;
+            min-height: 300px;
+            border: 1px solid red;
+            background: antiquewhite;
+            margin: 20px auto;
+        }
+        #box #ul{
+                display: flex;
+                flex-flow: row wrap;
+                justify-content: space-around;
+        }
+        #box #ul li{
+            list-style: none;
+        }
+        #box #ul li img{
+            height: 300px;
+        }
+        #box #ul li p{
+            border: 1px solid red;
+            line-height: 40px;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+  <div id="div1">
+     <div><img src="img/img1.jpg"></div>
+     <div>js语言精通</div>
+     $<div>25</div>
+   </div>
+    <div id="div2">
+        <div><img src="img/img1.jpg"></div>
+        <div>js权威指南</div>
+        $<div>25</div>
+    </div>
+    <div id="div3">
+        <div><img src="img/img1.jpg"></div>
+        <div>精通js</div>
+        $<div>25</div>
+    </div>
+    <div id="div4">
+        <div><img src="img/img1.jpg"></div>
+        <div>js编程艺术</div>
+        $<div>25</div>
+    </div>
+</div>
+
+<div>
+
+</div>
+</body>
+</html>
